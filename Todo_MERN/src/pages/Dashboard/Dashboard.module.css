@@ -1,0 +1,11 @@
+.dasboardWrapper {
+    background: linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #eeebff 69.79%,
+      #ebe8ff 99.99%,
+      #e1deff 100%
+    );
+    width: 100%;
+    min-height: 100vh;
+  }
