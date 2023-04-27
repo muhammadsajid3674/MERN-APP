@@ -1,19 +1,28 @@
+const { responseJsonHandler } = require("../helper");
 const logger = require("../logger/api.logger");
-const userRepository = require("../repository/user.repository");
+const userService = require("../service/user.service");
 
-const authUser = (req, res) => {
-    logger.info('Controller: authUser');
-    userRepository.authUser(req.body.user)
-        .then(data => res.json(data));
+const getUser = async (req, res) => {
+    const data = await userService.getUser(req);
+    if (data.code) {
+        logger.info('Controller: authUser');
+        responseJsonHandler(data, null, res)
+    } else {
+        responseJsonHandler(null, data, res)
+    }
 }
 
-const registerUser = (req, res) => {
-    logger.info('Controller :: registerUser');
-    userRepository.registerUser(req.body.user)
-        .then(data => res.json(data));
+const registerUser = async (req, res) => {
+    const data = await userService.registerUser(req)
+    if (data.code) {
+        logger.info('Controller :: registerUser');
+        responseJsonHandler(data, null, res)
+    } else {
+        responseJsonHandler(null, data, res)
+    }
 }
 
 module.exports = {
-    authUser,
+    getUser,
     registerUser
 }

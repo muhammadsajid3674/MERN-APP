@@ -1,65 +1,65 @@
 const generateToken = require("../config/util/generateToken");
-const logger = require("../logger/api.logger");
+const errorMessage = require("../helper/errorMessage");
 const User = require("../model/user.model");
 
 class UserRepository {
-    async authUser({ email, password }) {
-        let user;
-        try {
-            user = await User.findOne({ email });
-            if (user && await user.matchPassword(password)) {
-                return {
-                    message: 'User authenticated',
-                    status: true,
-                    user: {
-                        _id: user._id,
-                        name: user.name,
-                        email: user.email,
-                        isAdmin: user.isAdmin,
-                        token: generateToken(user._id)
-                    }
-                };
+
+    async registerUser(userObj) {
+        return new Promise((resolve, reject) => {
+            try {
+                User.create(userObj).then(data => {
+                    resolve({ message: "user created successfully", success: true, data })
+                }).catch(err => {
+                    errorMessage["001"].reason = err.message || "";
+                    reject(errorMessage["001"]);
+                })
+            } catch (error) {
+                errorMessage["003"].reason = error.message;
+                reject(errorMessage["003"]);
             }
-        } catch (error) {
-            logger.error('Error::: ' + error);
-        }
-        return {
-            message: 'Invalid email or password',
-            status: false
-        };
+        });
     }
 
-    async registerUser({ name, email, password }) {
-        try {
-            const userExits = await User.findOne({ email });
-            if (userExits) {
-                return {
-                    message: 'Email already exists',
-                    status: false
+    async getUser(userId) {
+        return new Promise((resolve, reject) => {
+            try {
+                const findQuery = {
+                    _id: userId
                 }
-            };
-            const user = await User.create({ name, email, password })
-            if (user) {
-                return {
-                    message: 'User Registered',
-                    status: true,
-                    user: {
-                        _id: user._id,
-                        name: user.name,
-                        email: user.email,
-                        isAdmin: user.isAdmin,
-                        token: generateToken(user._id)
-                    }
-                }
-            } else {
-                return {
-                    message: 'Invalid user data',
-                    status: false
-                };
+                User.findOne(findQuery).then(data => {
+                    resolve({ message: "user get successfully", success: true, data })
+                }).catch(err => {
+                    errorMessage["002"].reason = err.message || "";
+                    reject(errorMessage["002"]);
+                })
+            } catch (error) {
+                errorMessage["003"].reason = error.message;
+                reject(errorMessage["003"]);
             }
-        } catch (error) {
-            logger.error('Error::: ' + error);
-        }
+        });
+        // let user;
+        // try {
+        //     user = await User.findOne({ email });
+        //     if (user && await user.matchPassword(password)) {
+        //         return {
+        //             message: 'User authenticated',
+        //             status: true,
+        //             user: {
+        //                 _id: user._id,
+        //                 name: user.name,
+        //                 email: user.email,
+        //                 isAdmin: user.isAdmin,
+        //                 token: generateToken(user._id)
+        //             }
+        //         };
+        //     }
+        // } catch (error) {
+        //     logger.error('Error::: ' + error);
+        // }
+        // return {
+        //     message: 'Invalid email or password',
+        //     status: false
+        // };
     }
 }
 
