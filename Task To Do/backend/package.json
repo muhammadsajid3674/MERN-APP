@@ -1,0 +1,23 @@
+{
+  "name": "todo",
+  "version": "1.0.0",
+  "description": "Todo app with database and backend with nodejs",
+  "main": "server.js",
+  "scripts": {
+    "server": "nodemon server.js",
+    "data:import": "node seeder.js",
+    "data:destroy": "node seeder.js -d"
+  },
+  "author": "Sajid",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "hbs": "^4.2.0",
+    "jsonwebtoken": "^9.0.0",
+    "mongodb": "^5.1.0",
+    "mongoose": "^7.0.3",
+    "pine": "^1.1.1"
+  }
+}
