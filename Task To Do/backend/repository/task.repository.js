@@ -1,6 +1,5 @@
 const { connect } = require("../config/db.config");
 const errorMessage = require("../helper/errorMessage");
-const logger = require("../logger/api.logger");
 const Task = require("../model/task.model");
 
 class TaskRepositroy {

@@ -1,6 +1,5 @@
 const { responseJsonHandler } = require("../helper");
 const logger = require("../logger/api.logger");
-const taskRepository = require("../repository/task.repository");
 const taskService = require("../service/task.service");
 
 const getTask = async (req, res) => {
@@ -47,6 +46,5 @@ module.exports = {
     getTask,
     createTask,
     updateTask,
-    deleteTask,
-    taskStatus
+    deleteTask
 }
