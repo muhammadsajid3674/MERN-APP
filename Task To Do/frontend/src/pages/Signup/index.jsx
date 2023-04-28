@@ -3,37 +3,39 @@ import styles from './Signup.module.css'
 import Strings from '../../constants/Strings'
 import { InputComponent } from '../../components'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import signupAction from './Actions'
+import { toast } from 'react-toastify'
 
 const Login = () => {
+    const navigate = useNavigate();
+    const disaptch = useDispatch();
+    const state = useSelector(state => state)
+    console.log(state);
     const { control, handleSubmit } = useForm({
         mode: 'onChange',
         defaultValues: {
-            firstName: '',
-            lastName: '',
+            userName: '',
             emailAddress: '',
             password: ''
         }
     })
+    const onSubmit = (obj) => {
+        disaptch(signupAction(obj, toast, navigate))
+    }
     return (
         <Box className={styles.signupPageWrapper}>
-            <Box component={"form"} onSubmit={handleSubmit} className={styles.signupContainer} sx={{ width: { xs: "90%", sm: "90%", md: "50%", lg: "30%" } }}>
+            <Box component={"form"} onSubmit={handleSubmit(onSubmit)} className={styles.signupContainer} sx={{ width: { xs: "90%", sm: "90%", md: "50%", lg: "30%" } }}>
                 <Box sx={{ marginBottom: "50px" }}>
                     <Typography variant='h5'>{Strings.signup.heading}</Typography>
                     <Typography>{Strings.signup.subHeading}</Typography>
                 </Box>
                 <Box sx={{ margin: '20px 0' }}>
                     <InputComponent
-                        label={Strings.firstName}
+                        label={Strings.userName}
                         control={control}
-                        name="emailAddress"
-                    />
-                </Box>
-                <Box sx={{ margin: '20px 0' }}>
-                    <InputComponent
-                        label={Strings.lastName}
-                        control={control}
-                        name="emailAddress"
+                        name="userName"
                     />
                 </Box>
                 <Box sx={{ margin: '20px 0' }}>

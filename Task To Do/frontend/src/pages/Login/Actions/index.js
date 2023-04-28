@@ -11,7 +11,6 @@ const loginAction = ({ emailAddress, password }, toast, navigate) => {
                 password
             }
             const response = await postMethodCustomHeader('api/user/login', obToSend)
-            console.log(response);
             localStorage.setItem("token", response.data.token)
             localStorage.setItem("userDate", JSON.stringify(response.data.data))
             dispatch({

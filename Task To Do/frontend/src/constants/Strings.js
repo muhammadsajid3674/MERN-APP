@@ -9,8 +9,7 @@ const Strings = {
     },
     emailAddress: "Email Address",
     password: "Password",
-    firstName: "First Name",
-    lastName: "Last Name",
+    userName: "Name",
     signup: {
         heading: "LET'S GET STARTED",
         subHeading: "Please fill in this form to create an account!",
