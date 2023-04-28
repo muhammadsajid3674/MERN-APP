@@ -1,32 +1,52 @@
+const { responseJsonHandler } = require("../helper");
 const logger = require("../logger/api.logger");
 const taskRepository = require("../repository/task.repository");
+const taskService = require("../service/task.service");
 
-const getTask = (req, res) => {
-    logger.info('Controller: getTask');
-    taskRepository.getTask().then(data => res.json(data));
+const getTask = async (req, res) => {
+    const data = await taskService.getTask();
+    if (data.code) {
+        logger.info('Controller: getTask');
+        responseJsonHandler(data, null, res)
+    } else {
+        responseJsonHandler(null, data, res)
+    }
 }
 
-const createTask = (req, res) => {
-    const { task } = req.body;
-    console.log(task);
-    task.createAt = Date.now();
-    taskRepository.createTask(req.body.task).then(data => res.json(data))
+const createTask = async (req, res) => {
+    const data = await taskService.createTask(req);
+    if (data.code) {
+        logger.info('Controller: createTask');
+        responseJsonHandler(data, null, res)
+    } else {
+        responseJsonHandler(null, data, res)
+    }
 }
 
-const updateTask = (req, res) => {
-    const { task } = req.body;
-    const { id } = req.params;
-    taskRepository.updateTask({ _id: id }, task).then((data) => res.json(data))
+const updateTask = async (req, res) => {
+    const data = await taskService.updatedTask(req);
+    if (data.code) {
+        logger.info('Controller: updateTask');
+        responseJsonHandler(data, null, res)
+    } else {
+        responseJsonHandler(null, data, res)
+    }
 }
 
-const deleteTask = (req, res) => {
-    const { id } = req.params;
-    taskRepository.deleteTask(id).then(data => res.json(data))
+const deleteTask = async (req, res) => {
+    const data = await taskService.deleteTask(req)
+    if (data.code) {
+        logger.info('Controller: deleteTask');
+        responseJsonHandler(data, null, res)
+    } else {
+        responseJsonHandler(null, data, res)
+    }
 }
 
 module.exports = {
     getTask,
     createTask,
     updateTask,
-    deleteTask
+    deleteTask,
+    taskStatus
 }

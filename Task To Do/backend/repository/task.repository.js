@@ -1,61 +1,78 @@
 const { connect } = require("../config/db.config");
+const errorMessage = require("../helper/errorMessage");
 const logger = require("../logger/api.logger");
-const { Task } = require("../model/task.model");
+const Task = require("../model/task.model");
 
 class TaskRepositroy {
     constructor() {
         connect();
     }
 
-    async getTask() {
-        const tasks = await Task.find({});
-        console.log('Tasks::: ' + tasks);
-        return {
-            message: 'Fetch Tasks',
-            status: true,
-            tasks
-        };
+    getTask() {
+        return new Promise((resolve, reject) => {
+            try {
+                Task.find({}).then(data => {
+                    resolve({ message: "Task get", success: true, data })
+                }).catch(error => {
+                    errorMessage["002"].reason = error.message;
+                    reject(errorMessage["002"]);
+                })
+            } catch (error) {
+                errorMessage["003"].reason = error.message;
+                reject(errorMessage["003"]);
+            }
+        });
     }
 
     async createTask(task) {
-        let data = {};
-        try {
-            data = await Task.create(task);
-        } catch (error) {
-            logger.error('Error::: ' + error);
-        }
-        return {
-            message: 'Task Created',
-            status: true,
-            data
-        };
+        return new Promise((resolve, reject) => {
+            try {
+                Task.create(task).then(data => {
+                    resolve({ message: "Task created", success: true, data })
+                }).catch(error => {
+                    errorMessage["002"].reason = error.message;
+                    reject(errorMessage["002"]);
+                })
+            } catch (error) {
+                errorMessage["003"].reason = error.message;
+                reject(errorMessage["003"]);
+            }
+        });
     }
 
-    async updateTask(query, task) {
-        let data = {};
-        try {
-            data = await Task.updateOne(query, task);
-        } catch (error) {
-            logger.error('Error::: ' + error);
-        }
-        return {
-            message: 'Task Updated',
-            status: true,
-            data
-        };
+    updateTask(searchId, updatedTask) {
+        return new Promise((resolve, reject) => {
+            try {
+                Task.findByIdAndUpdate(searchId, updatedTask).then(data => {
+                    resolve({ message: "Task updated", success: true, data })
+                }).catch(error => {
+                    errorMessage["002"].reason = error.message;
+                    reject(errorMessage["002"]);
+                })
+            } catch (error) {
+                errorMessage["003"].reason = error.message;
+                reject(errorMessage["003"]);
+            }
+        });
     }
 
-    async deleteTask(taskId) {
-        let data = {};
-        try {
-            data = await Task.deleteOne({ _id: taskId });
-        } catch (error) {
-            logger.error('Error::: ' + error);
-        }
-        return {
-            message: 'Task Deleted',
-            status: `${data.deleteCount > 0 ? true : false}`
-        };
+    deleteTask(taskId) {
+        return new Promise((resolve, reject) => {
+            try {
+                let deleteQuery = {
+                    _id: taskId
+                }
+                Task.deleteOne(deleteQuery).then(data => {
+                    resolve({ message: "Task updated", success: true, data })
+                }).catch(error => {
+                    errorMessage["002"].reason = error.message;
+                    reject(errorMessage["002"]);
+                })
+            } catch (error) {
+                errorMessage["003"].reason = error.message;
+                reject(errorMessage["003"]);
+            }
+        });
     }
 }
 

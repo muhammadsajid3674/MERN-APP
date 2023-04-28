@@ -4,7 +4,7 @@ const User = require("../model/user.model");
 
 class UserRepository {
 
-    async registerUser(userObj) {
+    registerUser(userObj) {
         return new Promise((resolve, reject) => {
             try {
                 User.create(userObj).then(data => {
@@ -20,7 +20,7 @@ class UserRepository {
         });
     }
 
-    async getUser(userId) {
+    getUser(userId) {
         return new Promise((resolve, reject) => {
             try {
                 const findQuery = {
@@ -37,29 +37,6 @@ class UserRepository {
                 reject(errorMessage["003"]);
             }
         });
-        // let user;
-        // try {
-        //     user = await User.findOne({ email });
-        //     if (user && await user.matchPassword(password)) {
-        //         return {
-        //             message: 'User authenticated',
-        //             status: true,
-        //             user: {
-        //                 _id: user._id,
-        //                 name: user.name,
-        //                 email: user.email,
-        //                 isAdmin: user.isAdmin,
-        //                 token: generateToken(user._id)
-        //             }
-        //         };
-        //     }
-        // } catch (error) {
-        //     logger.error('Error::: ' + error);
-        // }
-        // return {
-        //     message: 'Invalid email or password',
-        //     status: false
-        // };
     }
 }
 
