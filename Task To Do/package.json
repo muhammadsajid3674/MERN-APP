@@ -4,9 +4,12 @@
   "description": "Todo app with database and backend with nodejs",
   "main": "server.js",
   "scripts": {
-    "server": "nodemon server.js",
-    "data:import": "node seeder.js",
-    "data:destroy": "node seeder.js -d"
+    "start": "node backend/server.js",
+    "server": "nodemon backend/server.js",
+    "client": "npm start --prefix frontend",
+    "data:import": "node backend/seeder.js",
+    "data:destroy": "node backend/seeder.js -d",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Sajid",
   "license": "ISC",
@@ -19,5 +22,10 @@
     "mongodb": "^5.1.0",
     "mongoose": "^7.0.3",
     "pine": "^1.1.1"
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.22"
   }
 }
