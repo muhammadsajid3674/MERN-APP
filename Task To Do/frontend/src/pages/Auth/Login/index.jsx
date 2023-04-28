@@ -2,11 +2,13 @@ import { Box, Button, Typography } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from 'react-toastify'
 import styles from './Login.module.css'
-import Strings from '../../constants/Strings'
-import { InputComponent } from '../../components'
-import loginAction from './Actions'
+import { loginAction } from '../authAction';
+import Strings from '../../../constants/Strings';
+import InputComponent from '../../../components/InputComponent';
+import yupValidations from '../../../config/validations';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -18,7 +20,8 @@ const Login = () => {
         defaultValues: {
             emailAddress: '',
             password: ''
-        }
+        },
+        resolver: yupResolver(yupValidations.loginSchema)
     })
     const onSubmit = (obj) => {
         disaptch(loginAction(obj, toast, navigate))
