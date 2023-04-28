@@ -5,7 +5,7 @@ const userService = require("../service/user.service");
 const getUser = async (req, res) => {
     const data = await userService.getUser(req);
     if (data.code) {
-        logger.info('Controller: authUser');
+        logger.info('Controller: getUser');
         responseJsonHandler(data, null, res)
     } else {
         responseJsonHandler(null, data, res)

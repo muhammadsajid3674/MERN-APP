@@ -20,12 +20,12 @@ class UserServices {
     }
     getUser = async (request) => {
         try {
-            const { userId } = request.params;
-            if (!userId) {
+            const { email } = request.body;
+            if (!email) {
                 return errorMessage["004"];
             }
-            const response = await userRepository.getUser(userId);
-            return { ...response, token: generateToken(userId) };
+            const response = await userRepository.getUser(email);
+            return { ...response, token: generateToken(email) };
         } catch (error) {
             if (error.code) {
                 return error;

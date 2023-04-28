@@ -20,11 +20,11 @@ class UserRepository {
         });
     }
 
-    getUser(userId) {
+    getUser(userEmail) {
         return new Promise((resolve, reject) => {
             try {
                 const findQuery = {
-                    _id: userId
+                    email: userEmail
                 }
                 User.findOne(findQuery).then(data => {
                     resolve({ message: "user get successfully", success: true, data })

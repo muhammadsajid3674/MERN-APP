@@ -1,11 +1,18 @@
 import { Box, Button, Typography } from '@mui/material'
+import { useForm } from 'react-hook-form'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 import styles from './Login.module.css'
 import Strings from '../../constants/Strings'
 import { InputComponent } from '../../components'
-import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import loginAction from './Actions'
 
 const Login = () => {
+    const navigate = useNavigate();
+    const disaptch = useDispatch();
+    const state = useSelector(state => state)
+    console.log(state);
     const { control, handleSubmit } = useForm({
         mode: 'onChange',
         defaultValues: {
@@ -13,9 +20,12 @@ const Login = () => {
             password: ''
         }
     })
+    const onSubmit = (obj) => {
+        disaptch(loginAction(obj, toast, navigate))
+    }
     return (
         <Box className={styles.loginPageWrapper}>
-            <Box component={"form"} onSubmit={handleSubmit} className={styles.loginContainer} sx={{ width: { xs: "90%", sm: "90%", md: "50%", lg: "30%" } }}>
+            <Box component={"form"} onSubmit={handleSubmit(onSubmit)} className={styles.loginContainer} sx={{ width: { xs: "90%", sm: "90%", md: "50%", lg: "30%" } }}>
                 <Box sx={{ marginBottom: "50px" }}>
                     <Typography variant='h5'>{Strings.login.heading}</Typography>
                     <Typography>{Strings.login.subHeading}</Typography>
