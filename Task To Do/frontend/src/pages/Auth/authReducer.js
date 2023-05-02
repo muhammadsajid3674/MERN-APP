@@ -4,7 +4,6 @@ import authActionTypes from "./authConstant";
 
 const INITIAL_VALUES = {
     user: null,
-    error: ""
 }
 
 const userLogin = (state, payload) => {

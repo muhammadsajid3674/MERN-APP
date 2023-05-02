@@ -14,7 +14,6 @@ export const loginAction = ({ emailAddress, password }, toast, navigate) => {
             }
             const response = await postMethodCustomHeader('api/user/login', obToSend)
             localStorage.setItem("token", response.data.token)
-            localStorage.setItem("userData", JSON.stringify(response.data.data))
             dispatch({
                 type: authActionTypes.USER_LOGIN,
                 payload: response
@@ -41,7 +40,6 @@ export const signupAction = ({ username, emailAddress, password }, toast, naviga
             };
             const response = await postMethodCustomHeader('api/user/', obToSend);
             localStorage.setItem("token", response.data.token);
-            localStorage.setItem("userData", JSON.stringify(response.data.data));
             dispatch({
                 type: authActionTypes.USER_SIGNUP,
                 payload: response
@@ -60,7 +58,6 @@ export const logoutAction = (toast, navigate) => {
     return async (dispatch) => {
         try {
             dispatch({ type: asyncResActionTypes.ASYNC_ACTION_START });
-            localStorage.removeItem("userData");
             localStorage.removeItem("token");
             dispatch({ type: authActionTypes.USER_LOGOUT });
             dispatch({ type: asyncResActionTypes.ASYNC_ACTION_FINISH, payload: authActionTypes.USER_LOGOUT });
