@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux'
-import { loginReducer } from '../../../pages/Auth/authReducer';
+import authReducer from '../../../pages/Auth/authReducer';
+import asyncReducer from '../../common/AsyncResponse/asyncReducer';
 
 const rootReducer = combineReducers({
-    login: loginReducer,
-    // signup: signupReducer
+    auth: authReducer,
+    async: asyncReducer
 });
 
 export default rootReducer;

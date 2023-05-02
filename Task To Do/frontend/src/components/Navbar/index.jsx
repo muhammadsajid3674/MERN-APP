@@ -9,20 +9,17 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { Button } from '@mui/material';
+import PropTypes from 'prop-types';
 
-const Navbar = () => {
-    const [auth, setAuth] = React.useState(false);
+const Navbar = memo(function Navbar(props) {
+    const { isAuth, logout } = props;
     const [anchorEl, setAnchorEl] = React.useState(null);
-
-
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
     };
-
     const handleClose = () => {
         setAnchorEl(null);
     };
-
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -39,7 +36,7 @@ const Navbar = () => {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Task To Do
                     </Typography>
-                    {auth ? (
+                    {isAuth ? (
                         <div>
                             <IconButton
                                 size="large"
@@ -67,7 +64,7 @@ const Navbar = () => {
                                 onClose={handleClose}
                             >
                                 <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                <MenuItem onClick={handleClose}>My account</MenuItem>
+                                <MenuItem onClick={logout}>Logout</MenuItem>
                             </Menu>
                         </div>
                     ) : (
@@ -77,6 +74,11 @@ const Navbar = () => {
             </AppBar>
         </Box>
     );
+})
+
+Navbar.propTypes = {
+    isAuth: PropTypes.bool.isRequired,
+    logout: PropTypes.func
 }
 
-export default memo(Navbar);
+export default Navbar;

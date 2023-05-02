@@ -2,7 +2,7 @@ import { Box, Button, Typography } from '@mui/material'
 import styles from './Signup.module.css'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import Strings from '../../../constants/Strings'
 import InputComponent from '../../../components/InputComponent'
@@ -11,8 +11,6 @@ import { signupAction } from '../authAction'
 const Login = () => {
     const navigate = useNavigate();
     const disaptch = useDispatch();
-    const state = useSelector(state => state)
-    console.log(state);
     const { control, handleSubmit } = useForm({
         mode: 'onChange',
         defaultValues: {

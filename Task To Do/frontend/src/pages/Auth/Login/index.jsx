@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from 'react-toastify'
 import styles from './Login.module.css'
@@ -13,8 +13,6 @@ import yupValidations from '../../../config/validations';
 const Login = () => {
     const navigate = useNavigate();
     const disaptch = useDispatch();
-    const state = useSelector(state => state)
-    console.log(state);
     const { control, handleSubmit } = useForm({
         mode: 'onChange',
         defaultValues: {
@@ -22,10 +20,10 @@ const Login = () => {
             password: ''
         },
         resolver: yupResolver(yupValidations.loginSchema)
-    })
+    });
     const onSubmit = (obj) => {
         disaptch(loginAction(obj, toast, navigate))
-    }
+    };
     return (
         <Box className={styles.loginPageWrapper}>
             <Box component={"form"} onSubmit={handleSubmit(onSubmit)} className={styles.loginContainer} sx={{ width: { xs: "90%", sm: "90%", md: "50%", lg: "30%" } }}>

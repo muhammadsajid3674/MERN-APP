@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import ProtectedRoutes from './config/Route/ProtectedRoutes'
 import { Dashboard, Login, Signup } from './pages'
+import { ToastComponent } from './components'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
         </Route>
         <Route path="*" element={<h1>404 Page not found</h1>} />
       </Routes >
+      <ToastComponent />
     </>
   )
 }

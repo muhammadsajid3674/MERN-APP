@@ -19,6 +19,7 @@ const Strings = {
         successMessage: "user successfully signup!",
     },
     errorMessage: "SomeThing Went Wrong",
+    userLogin: "User Successfully Logged In",
     dashboard: {
         description: "Description",
         title: "Title",

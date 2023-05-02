@@ -1,61 +1,32 @@
+import { createReducer } from "../../config/utils/createReducer";
 import authActionTypes from "./authConstant";
 
 
 const INITIAL_VALUES = {
-    login: {
-        loginLoading: false,
-        loginData: "",
-        loginError: ""
-    },
-    signin: {
-        signupLoading: false,
-        signupData: "",
-        signupError: ""
-    }
+    user: null,
+    error: ""
 }
 
-export const loginReducer = (state = INITIAL_VALUES.login, action) => {
-    switch (action.type) {
-        case authActionTypes.USER_LOGIN_LOADING:
-            return {
-                ...state,
-                loginLoading: true
-            };
-        case authActionTypes.USER_LOGIN_SUCCESS:
-            return {
-                ...state,
-                loginLoading: false,
-                loginData: action.payload?.data
-            };
-        case authActionTypes.USER_LOGIN_FAIL:
-            return {
-                ...state,
-                loginLoading: false,
-            };
-        default:
-            return state;
-    }
+const userLogin = (state, payload) => {
+    return {
+        user: payload?.data
+    };
 }
 
-export const signupReducer = (state = INITIAL_VALUES.signin, action) => {
-    switch (action.type) {
-        case authActionTypes.USER_SIGNUP_LOADING:
-            return {
-                ...state,
-                signupLoading: true
-            };
-        case authActionTypes.USER_SIGNUP_SUCCESS:
-            return {
-                ...state,
-                signupLoading: false,
-                signupData: action.payload?.data
-            };
-        case authActionTypes.USER_SIGNUP_FAIL:
-            return {
-                ...state,
-                signupLoading: false,
-            };
-        default:
-            return state;
-    }
+const userSignup = (state, payload) => {
+    return {
+        user: payload?.data
+    };
 }
+
+const userLogout = () => {
+    return {
+        user: {}
+    };
+}
+
+export default createReducer(INITIAL_VALUES, {
+    [authActionTypes.USER_LOGIN]: userLogin,
+    [authActionTypes.USER_SIGNUP]: userSignup,
+    [authActionTypes.USER_LOGOUT]: userLogout,
+})
