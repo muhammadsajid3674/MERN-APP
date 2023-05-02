@@ -6,9 +6,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from 'react-toastify'
 import styles from './Login.module.css'
 import { loginAction } from '../authAction';
-import Strings from '../../../constants/Strings';
+import Strings from '../../../config/common/constants/Strings';
 import InputComponent from '../../../components/InputComponent';
-import yupValidations from '../../../config/validations';
+import yupValidations from '../../../config/common/validations';
 
 const Login = () => {
     const navigate = useNavigate();

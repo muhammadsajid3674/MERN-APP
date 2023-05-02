@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { BASE_URL } from '..';
+import { BASE_URL } from '../..';
 
 export const getUserToken = () => {
     const token = localStorage.getItem("token");

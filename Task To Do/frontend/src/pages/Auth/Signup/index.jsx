@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
-import Strings from '../../../constants/Strings'
+import Strings from '../../../config/common/constants/Strings'
 import InputComponent from '../../../components/InputComponent'
 import { signupAction } from '../authAction'
 

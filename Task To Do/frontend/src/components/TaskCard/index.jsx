@@ -2,7 +2,7 @@ import { memo } from "react";
 import { Box, Button, IconButton, Tooltip, Typography } from "@mui/material"
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Strings } from "../../constants";
+import { Strings } from "../../config/common/constants";
 import styles from './TaskCard.module.css'
 
 const TaskCard = ({ task }) => {

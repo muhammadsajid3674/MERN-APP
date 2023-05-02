@@ -1,6 +1,6 @@
 import { asyncResActionTypes } from "../../config/common/AsyncResponse/asyncConstant";
-import { postMethodCustomHeader } from "../../config/utils/apiResponse";
-import Strings from "../../constants/Strings";
+import { postMethodCustomHeader } from "../../config/common/utils/apiResponse";
+import Strings from "../../config/common/constants/Strings";
 import authActionTypes from "./authConstant";
 
 

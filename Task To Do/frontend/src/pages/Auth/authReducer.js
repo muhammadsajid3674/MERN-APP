@@ -1,4 +1,4 @@
-import { createReducer } from "../../config/utils/createReducer";
+import { createReducer } from "../../config/common/utils/createReducer";
 import authActionTypes from "./authConstant";
 
 

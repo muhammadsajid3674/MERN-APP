@@ -1,7 +1,7 @@
 import { Box, Button, Container } from "@mui/material";
 import Navbar from "../../components/Navbar"
 import styles from "./Dashboard.module.css";
-import { Strings } from "../../constants";
+import { Strings } from "../../config/common/constants";
 import { TaskCard } from "../../components";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";

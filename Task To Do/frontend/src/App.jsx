@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import ProtectedRoutes from './config/Route/ProtectedRoutes'
+import ProtectedRoutes from './config/common/Route/ProtectedRoutes'
 import { Dashboard, Login, Signup } from './pages'
 import { ToastComponent } from './components'
 
