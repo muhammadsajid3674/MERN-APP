@@ -5,6 +5,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Strings } from "../../config/common/constants";
 import styles from './TaskCard.module.css'
 import PropTypes from 'prop-types'
+import moment from 'moment'
 
 const TaskCard = memo(
     function TaskCard({ task }) {
@@ -33,7 +34,7 @@ const TaskCard = memo(
                     </Box>
                     <Box>
                         <Typography variant="span" sx={{ fontWeight: 'bold' }}>{Strings.dashboard.dueDate}</Typography>
-                        <Typography>{due_date || "Task Due Date"}</Typography>
+                        <Typography>{moment(due_date).format("DD-MM-YYYY") || "Task Due Date"}</Typography>
                     </Box>
                 </Box>
                 {completed ? (

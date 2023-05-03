@@ -6,29 +6,34 @@ import { useNavigate } from "react-router-dom";
 import { logoutAction } from "../Auth/authAction";
 import { toast } from "react-toastify";
 import TaskCardParent from "../Task/TaskCardParent";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getTaskAciton } from "../Task/taskAction";
+import { LoaderComponent } from "../../components";
 
 const Dashboard = () => {
+    const [isLoading, setLoading] = useState(true)
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { data } = useSelector(state => state.task)
+    const { task: { data }, auth: { user: { data: { _id } } } } = useSelector(state => state)
     const loginToken = localStorage.getItem('token');
-    const persistStore = JSON.parse(localStorage.getItem('persist:taskTodo'));
-    const { user: { data: { _id } } } = JSON.parse(persistStore.auth);
     const logout = () => {
         dispatch(logoutAction(toast, navigate))
     };
     useEffect(() => {
         dispatch(getTaskAciton())
+        setLoading(false)
     }, [dispatch]);
+    if (isLoading) return <LoaderComponent />
     return (
-        <div className={styles.dasboardWrapper}>
-            <Navbar isAuth={Boolean(loginToken)} logout={logout} />
-            <Container sx={{ padding: '20px' }}>
-                <TaskCardParent tasks={data} currentUserId={_id} />
-            </Container>
-        </div>
+        <>
+            <div className={styles.dasboardWrapper}>
+                <Navbar isAuth={Boolean(loginToken)} logout={logout} />
+                <Container sx={{ padding: '20px' }}>
+                    <TaskCardParent currentUserId={_id} tasks={data} />
+                </Container>
+            </div>
+
+        </>
     )
 }
 
