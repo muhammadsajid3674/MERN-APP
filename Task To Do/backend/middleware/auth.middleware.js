@@ -1,27 +1,23 @@
 const jwt = require("jsonwebtoken");
 const User = require("../model/user.model");
+const errorMessage = require("../helper/errorMessage");
+const { responseJsonHandler } = require("../helper")
 
-const protectedRoute = async (req, res, next) => {
+const authenticate = async (req, res, next) => {
     let token;
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         try {
-            token = req.headers.authorization.split('')[1];
+            token = req.headers.authorization.split(' ')[1];
             const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
-            req.user = await User.findById(decoded.id).select('-password');
+            req.user = await User.findById(decoded.userId )
             next()
         } catch (error) {
-            console.log(error);
-            res.json({
-                message: 'Not authorized, no token',
-                status: false
-            })
+            responseJsonHandler(errorMessage["008"], null, res);
         }
-    } if (!token) {
-        res.json({
-            message: 'Not authorized, no token',
-            status: false
-        })
+    }
+    if (!token) {
+        responseJsonHandler("No Token Avaliable", null, res);
     }
 }
 
-module.exports = protectedRoute
+module.exports = authenticate

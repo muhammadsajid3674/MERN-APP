@@ -8,7 +8,7 @@ class UserServices {
             const { name, email, password } = request.body;
             const objToSend = { name, email, password };
             const response = await userRepository.registerUser(objToSend);
-            return { ...response, token: generateToken(email) };
+            return response;
         } catch (error) {
             if (error.code) {
                 return error;
@@ -25,7 +25,8 @@ class UserServices {
                 return errorMessage["004"];
             }
             const response = await userRepository.getUser(email);
-            return { ...response, token: generateToken(email) };
+            const { data: { _id } } = response;
+            return { ...response, token: generateToken(_id) };
         } catch (error) {
             if (error.code) {
                 return error;
