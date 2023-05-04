@@ -54,9 +54,9 @@ export const putMethodCustomHeader = (relativesUrl, obj) => {
     });
 }
 
-export const deleteMethodCustomHeader = (relativesUrl, obj) => {
+export const deleteMethodCustomHeader = (relativesUrl) => {
     return new Promise((resolve, reject) => {
-        axios.delte(`${BASE_URL}/${relativesUrl}`, obj, { headers: getHeader() })
+        axios.delete(`${BASE_URL}/${relativesUrl}`, { headers: getHeader() })
             .then(res => resolve(res))
             .catch(err => reject(err))
     });

@@ -46,7 +46,7 @@ class TaskService {
     }
     deleteTask = async (request) => {
         try {
-            const { taskId } = request.body;
+            const { taskId } = request.params;
             const response = await taskRepository.deleteTask(taskId);
             return response;
         } catch (error) {

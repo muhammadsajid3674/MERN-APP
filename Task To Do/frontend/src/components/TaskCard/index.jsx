@@ -8,8 +8,8 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 
 const TaskCard = memo(
-    function TaskCard({ task }) {
-        const { title, description, due_date, completed } = task || {};
+    function TaskCard({ task, taskDelete }) {
+        const { title, description, due_date, completed, _id } = task || {};
         return (
             <Box className={styles.taskCardWrapper}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -21,7 +21,7 @@ const TaskCard = memo(
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Delete">
-                            <IconButton>
+                            <IconButton onClick={() => taskDelete(_id)}>
                                 <DeleteIcon color="secondary" sx={{ cursor: 'pointer' }} />
                             </IconButton>
                         </Tooltip>
@@ -52,7 +52,8 @@ const TaskCard = memo(
 )
 
 TaskCard.propTypes = {
-    task: PropTypes.object
+    task: PropTypes.object,
+    taskDelete: PropTypes.func
 }
 
 export default TaskCard

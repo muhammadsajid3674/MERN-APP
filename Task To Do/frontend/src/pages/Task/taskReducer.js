@@ -14,8 +14,14 @@ const postTask = (state) => {
         ...state
     }
 }
+const deleteTask = (state) => {
+    return {
+        ...state
+    }
+}
 
 export default createReducer(INITIAL_VALUES, {
     [taskActionType.GET_TASK]: getTask,
     [taskActionType.POST_TASK]: postTask,
+    [taskActionType.DELETE_TASK]: deleteTask
 })
