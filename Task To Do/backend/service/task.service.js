@@ -31,7 +31,8 @@ class TaskService {
     }
     updatedTask = async (request) => {
         try {
-            const { title, description, dueDate, taskId, completed } = request.body;
+            const { title, description, dueDate, completed } = request.body;
+            const { taskId } = request.params;
             const objToSend = { title, description, due_date: dueDate, completed };
             const response = await taskRepository.updateTask(taskId, objToSend);
             return response;

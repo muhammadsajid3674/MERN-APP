@@ -28,6 +28,9 @@ const Strings = {
         addTask: "add task",
         editTask: "edit task",
     },
+    toaster: {
+        addTask: "Task Added Successfully"
+    }
 };
 
 export default Strings;

@@ -53,7 +53,7 @@ const TaskCard = memo(
 
 TaskCard.propTypes = {
     task: PropTypes.object,
-    taskDelete: PropTypes.func
+    taskDelete: PropTypes.any
 }
 
 export default TaskCard

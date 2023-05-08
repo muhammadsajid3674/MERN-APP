@@ -36,6 +36,20 @@ class UserServices {
             }
         }
     }
+
+    getUserList = async () => {
+        try {
+            const response = await userRepository.getUserList();
+            return response;
+        } catch (error) {
+            if (error.code) {
+                return error;
+            } else {
+                errorMessage["003"].reason = error.message;
+                return errorMessage["003"];
+            }
+        }
+    }
 }
 
 

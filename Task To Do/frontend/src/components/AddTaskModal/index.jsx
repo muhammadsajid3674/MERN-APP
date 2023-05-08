@@ -1,12 +1,8 @@
-import { memo } from 'react';
-import PropTypes from 'prop-types'
-import { Backdrop, Box, Button, Fade, Modal, Typography } from '@mui/material';
-import { Strings } from '../../config/common/constants';
-import InputComponent from '../InputComponent';
-import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import { postTaskAciton } from '../../pages/Task/taskAction';
-import { toast } from 'react-toastify';
+import { Fragment } from 'react';
+import ReactDOM from 'react-dom';
+import { Backdrop, Box, Fade, Modal } from '@mui/material';
+import PropTypes from 'prop-types';
+import AddTask from '../../pages/Task/AddTask';
 
 const style = {
     position: 'absolute',
@@ -20,85 +16,34 @@ const style = {
     p: 4,
 };
 
-const AddTaskModal = memo(
-    function AddTaskModal({ open, setOpen, currentUserId }) {
-
-        const dispatch = useDispatch();
-
-        const { control, handleSubmit } = useForm({
-            mode: 'onChange',
-            defaultValues: {
-                title: "",
-                description: "",
-                dueDate: ""
-            }
-        })
-
-        const onSubmit = (objToSend) => {
-            dispatch(postTaskAciton(objToSend, toast, currentUserId));
-            setOpen(false);
-        }
-
-        const handleClose = () => setOpen(false);
-
-        return (
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-                closeAfterTransition
-                slots={{ backdrop: Backdrop }}
-                slotProps={{
-                    backdrop: {
-                        timeout: 500,
-                    },
-                }}
-            >
-                <Fade in={open}>
-                    <Box sx={style}>
-                        <Typography id="modal-modal-title" variant="h5" component="h2">
-                            Task Details
-                        </Typography>
-                        <Box component={"form"} onSubmit={handleSubmit(onSubmit)}>
-                            <Box sx={{ margin: '1rem 0' }}>
-                                <InputComponent
-                                    label={Strings.dashboard.title}
-                                    control={control}
-                                    name="title"
-                                />
-                            </Box>
-                            <Box sx={{ margin: '1rem 0' }}>
-                                <InputComponent
-                                    label={Strings.dashboard.description}
-                                    control={control}
-                                    name="description"
-                                />
-                            </Box>
-                            <Box sx={{ margin: '1rem 0' }}>
-                                <InputComponent
-                                    label={Strings.dashboard.dueDate}
-                                    control={control}
-                                    name="dueDate"
-                                    type="date"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                />
-                            </Box>
-                            <Button variant={"contained"} color='primary' type='submit'>{Strings.dashboard.addTask}</Button>
-                        </Box>
-                    </Box>
-                </Fade>
-            </Modal>
-        );
-    }
-)
+const AddTaskModal = ({ isShowing, hide, userId }) => isShowing ? ReactDOM.createPortal(
+    <Fragment>
+        <Modal
+            open={isShowing}
+            onClose={hide}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            closeAfterTransition
+            slots={{ backdrop: Backdrop }}
+            slotProps={{
+                backdrop: {
+                    timeout: 500,
+                },
+            }}
+        >
+            <Fade in={isShowing}>
+                <Box sx={style}>
+                    <AddTask userId={userId} onClose={hide} />
+                </Box>
+            </Fade>
+        </Modal>
+    </Fragment>, document.body
+) : null;
 
 AddTaskModal.propTypes = {
-    open: PropTypes.bool,
-    setOpen: PropTypes.any,
-    currentUserId: PropTypes.string,
+    isShowing: PropTypes.bool,
+    hide: PropTypes.any,
+    userId: PropTypes.any
 }
 
 export default AddTaskModal;

@@ -5,8 +5,8 @@ import taskReducer from '../../../pages/Task/taskReducer';
 
 const rootReducer = combineReducers({
     auth: authReducer,
+    task: taskReducer,
     async: asyncReducer,
-    task: taskReducer
 });
 
 export default rootReducer;

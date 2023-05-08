@@ -7,7 +7,8 @@ import storage from 'redux-persist/lib/storage'
 
 const persistConfig = {
     key: 'taskTodo',
-    storage
+    storage,
+    blacklist: ['async', 'modal']
 }
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 const middlewares = [thunk];

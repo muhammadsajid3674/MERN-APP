@@ -38,6 +38,22 @@ class UserRepository {
             }
         });
     }
+
+    getUserList() {
+        return new Promise((resolve, reject) => {
+            try {
+                User.find({}).then(data => {
+                    resolve({ message: "user list get successfully", success: true, data })
+                }).catch(err => {
+                    errorMessage["002"].reason = err.message || "";
+                    reject(errorMessage["002"]);
+                })
+            } catch (error) {
+                errorMessage["003"].reason = error.message;
+                reject(errorMessage["003"]);
+            }
+        });
+    }
 }
 
 module.exports = new UserRepository();

@@ -22,7 +22,18 @@ const registerUser = async (req, res) => {
     }
 }
 
+const getUserList = async (req, res) => {
+    const data = await userService.getUserList();
+    if (data.code) {
+        logger.info('Controller :: getUserList');
+        responseJsonHandler(data, null, res)
+    } else {
+        responseJsonHandler(null, data, res)
+    }
+}
+
 module.exports = {
     getUser,
-    registerUser
+    registerUser,
+    getUserList
 }
