@@ -47,6 +47,30 @@ export const postTaskAciton = (obj, toast, currentUserId) => {
     };
 };
 
+export const updateTaskAciton = (taskId, toast, objToSend) => {
+    return async (dispatch) => {
+        try {
+            const access = window.confirm("Do you really want to update?");
+            if (access) {
+                dispatch({ type: asyncResActionTypes.ASYNC_ACTION_START });
+                // await deleteMethodCustomHeader(`api/todo/${taskId}`);
+                await taskApi.updateTask(taskId, objToSend).then(() => {
+                    dispatch({ type: taskActionType.UPDATE_TASK });
+                    dispatch(getTaskAciton());
+                    toast.success("Task Updated Succesfully")
+                    dispatch({ type: asyncResActionTypes.ASYNC_ACTION_FINISH });
+                }).catch(err => {
+                    console.log(err);
+                    dispatch({ type: asyncResActionTypes.ASYNC_ACTION_ERROR });
+                })
+            }
+        } catch (error) {
+            console.log("Error :: " + error);
+            toast.error(Strings.errorMessage)
+            dispatch({ type: asyncResActionTypes.ASYNC_ACTION_ERROR });
+        }
+    };
+};
 export const deleteTaskAciton = (taskId, toast) => {
     return async (dispatch) => {
         try {

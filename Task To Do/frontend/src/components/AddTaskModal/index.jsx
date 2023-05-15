@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import { Backdrop, Box, Fade, Modal } from '@mui/material';
 import PropTypes from 'prop-types';
-import AddTask from '../../pages/Task/AddTask';
+import TaskFields from '../../pages/Task/TaskFields';
 
 const style = {
     position: 'absolute',
@@ -16,7 +16,7 @@ const style = {
     p: 4,
 };
 
-const AddTaskModal = ({ isShowing, hide, userId }) => isShowing ? ReactDOM.createPortal(
+const AddTaskModal = ({ isShowing, hide, userId, taskToEdit, isEdit }) => isShowing ? ReactDOM.createPortal(
     <Fragment>
         <Modal
             open={isShowing}
@@ -33,7 +33,7 @@ const AddTaskModal = ({ isShowing, hide, userId }) => isShowing ? ReactDOM.creat
         >
             <Fade in={isShowing}>
                 <Box sx={style}>
-                    <AddTask userId={userId} onClose={hide} />
+                    <TaskFields userId={userId} onClose={hide} taskToEdit={taskToEdit} isEdit={isEdit} />
                 </Box>
             </Fade>
         </Modal>
@@ -43,7 +43,12 @@ const AddTaskModal = ({ isShowing, hide, userId }) => isShowing ? ReactDOM.creat
 AddTaskModal.propTypes = {
     isShowing: PropTypes.bool,
     hide: PropTypes.any,
-    userId: PropTypes.any
+    userId: PropTypes.any,
+    taskToEdit: PropTypes.object,
+    isEdit: PropTypes.bool
+}
+AddTaskModal.defaultProps = {
+    isEdit: false
 }
 
 export default AddTaskModal;

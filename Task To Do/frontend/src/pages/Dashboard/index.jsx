@@ -20,8 +20,8 @@ const Dashboard = () => {
         dispatch(logoutAction(toast, navigate))
     };
     useEffect(() => {
-        dispatch(getTaskAciton())
-        setLoading(false)
+        dispatch(getTaskAciton());
+        setLoading(false);
     }, [dispatch]);
     if (isLoading) return <LoaderComponent />
     return (

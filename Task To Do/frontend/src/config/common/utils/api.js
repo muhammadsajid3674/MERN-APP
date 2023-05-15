@@ -54,4 +54,7 @@ export class TaskApi extends Api {
     deleteTask(id) {
         return this.init().delete(`/todo/${id}`)
     }
+    updateTask(id, objToSend) {
+        return this.init().put(`/todo/${id}`, objToSend)
+    }
 }
