@@ -19,7 +19,7 @@ export const loginAction = ({ emailAddress, password }, toast, navigate) => {
                     localStorage.setItem("token", access_token)
                     dispatch({
                         type: authActionTypes.USER_LOGIN,
-                        payload: response
+                        payload: response.data
                     })
                     toast.success(Strings.userLogin);
                     dispatch({ type: asyncResActionTypes.ASYNC_ACTION_FINISH, payload: authActionTypes.USER_LOGIN });

@@ -16,7 +16,7 @@ const style = {
     p: 4,
 };
 
-const AddTaskModal = ({ isShowing, hide, userId, taskToEdit, isEdit }) => isShowing ? ReactDOM.createPortal(
+const AddTaskModal = ({ isShowing, hide, userId, taskToEdit, isEdit, onSubmit }) => isShowing ? ReactDOM.createPortal(
     <Fragment>
         <Modal
             open={isShowing}
@@ -33,7 +33,7 @@ const AddTaskModal = ({ isShowing, hide, userId, taskToEdit, isEdit }) => isShow
         >
             <Fade in={isShowing}>
                 <Box sx={style}>
-                    <TaskFields userId={userId} onClose={hide} taskToEdit={taskToEdit} isEdit={isEdit} />
+                    <TaskFields userId={userId} onClose={hide} taskToEdit={taskToEdit} isEdit={isEdit} onSubmit={onSubmit} />
                 </Box>
             </Fade>
         </Modal>

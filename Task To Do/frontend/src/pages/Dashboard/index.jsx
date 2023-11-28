@@ -7,29 +7,35 @@ import { logoutAction } from "../Auth/authAction";
 import { toast } from "react-toastify";
 import TaskCardParent from "../Task/TaskCardParent";
 import { useEffect, useState } from "react";
-import { getTaskAciton } from "../Task/taskAction";
 import { LoaderComponent } from "../../components";
+import { crud } from "../../config/crud/actions";
+import { selectListItems } from "../../config/crud/selectors";
+import { isLoggedIn, selectCurrentAdmin } from "../../config/redux/auth/selectors";
 
 const Dashboard = () => {
-    const [isLoading, setLoading] = useState(true)
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { task: { data }, auth: { user: { data: { _id } } } } = useSelector(state => state)
+    const { user: currentUser } = useSelector(state => state.auth)
+    console.log('currentUser :>> ', currentUser);
+    const tasks = useSelector(selectListItems('tasks'));
+    console.log('tasks :>> ', tasks);
     const loginToken = localStorage.getItem('token');
     const logout = () => {
         dispatch(logoutAction(toast, navigate))
     };
     useEffect(() => {
-        dispatch(getTaskAciton());
-        setLoading(false);
+        // dispatch(crud.resetState());
+        dispatch(crud.list({ endPoint: '/todo', service: 'tasks' }));
+        dispatch(crud.list({ endPoint: '/user', service: 'users' }));
     }, [dispatch]);
-    if (isLoading) return <LoaderComponent />
+    
+    if (tasks?.isLoading) return <LoaderComponent />
     return (
         <>
             <div className={styles.dasboardWrapper}>
                 <Navbar isAuth={Boolean(loginToken)} logout={logout} />
                 <Container sx={{ padding: '20px' }}>
-                    <TaskCardParent currentUserId={_id} tasks={data} />
+                    <TaskCardParent currentUserId={currentUser?._id} tasks={tasks?.result || []} />
                 </Container>
             </div>
 
