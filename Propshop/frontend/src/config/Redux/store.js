@@ -5,9 +5,13 @@ import { cartReducer } from "./Reducer/cartReducer";
 import { myOrderListReducer, orderDetailReducer, orderListReducer, orderPaymentReducer } from "./Reducer/orderReducer";
 import { deleteProductReducer, productListReducer, singleProductReducer } from "./Reducer/productReducer";
 import { deleteUsersReducer, updateUsersReducer, userDetailReducer, userloginReducer, userRegisterReducer, usersListReducer, userUpdateProfileReducer } from "./Reducer/userReducer";
+import authReducer from './Reducer/auth';
+import { asyncReducer } from "../AsyncHandler";
 
 const configureStore = () => {
     const reducer = combineReducers({
+        auth: authReducer,
+        asyncHandler: asyncReducer,
         productList: productListReducer,
         singleProduct: singleProductReducer,
         cart: cartReducer,

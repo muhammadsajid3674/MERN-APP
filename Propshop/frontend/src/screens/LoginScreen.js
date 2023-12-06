@@ -4,26 +4,27 @@ import { Link, useNavigate } from 'react-router-dom';
 import FormContainer from '../components/FormContainer'
 import LoadingButton from '../components/LoadingButton';
 import MessageAlert from '../components/MessageAlert';
-import { login } from '../config/Redux/Action/userAction';
+import { login } from '../config/Redux/Action/auth';
 import { withRouterAndRedux } from '../config/util/withRouterAndRedux';
 
 const LoginScreen = ({ dispatch, state }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const { loading, error, userInfo } = state.userLogin;
+    const { authenticated, currentUser } = state.auth;
+    const { loading, elementName } = state.asyncHandler;
     const redirect = window.location.search ? window.location.search.split('=')[1] : '';
 
     const handleSubmit = (e) => {
-        dispatch(login(email, password))
+        dispatch(login({ email, password }))
         e.preventDefault()
     };
 
     useEffect(() => {
-        if (userInfo) {
+        if (authenticated) {
             navigate(`/${redirect}`);
         }
-    }, [userInfo, navigate, redirect])
+    }, [authenticated, navigate, redirect])
     return (
         <FormContainer>
             <h1>Sign in</h1>
@@ -37,8 +38,8 @@ const LoginScreen = ({ dispatch, state }) => {
                     <Form.Label>Password</Form.Label>
                     <Form.Control type='password' placeholder='Enter password' value={password} onChange={(e) => setPassword(e.target.value)} />
                 </FormGroup>
-                {error && <MessageAlert variant='danger'>{error}</MessageAlert>}
-                <LoadingButton variant='primary' type='submit' label='Submit' isLoading={loading} />
+                {/* {error && <MessageAlert variant='danger'>{error}</MessageAlert>} */}
+                <LoadingButton variant='primary' type='submit' label='Submit' isLoading={elementName === 'login' && loading} />
             </Form>
             <Row className='py-3'>
                 <Col>

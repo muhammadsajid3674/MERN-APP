@@ -1,9 +1,12 @@
 import { asyncResActionTypes } from "../../config/common/AsyncResponse/asyncConstant";
 import Strings from "../../config/common/constants/Strings";
 import { TaskApi } from "../../config/common/utils/api";
+import errorHandler from "../../config/common/utils/errorHandler";
+import successHandler from "../../config/common/utils/successHandler";
 import taskActionType from "./taskConstant";
 
 const taskApi = new TaskApi();
+
 export const getTaskAciton = () => {
     return async (dispatch) => {
         try {
@@ -25,25 +28,22 @@ export const getTaskAciton = () => {
 
 export const postTaskAciton = (obj, toast, currentUserId) => {
     return async (dispatch) => {
-        try {
-            const { dueDate, ...rest } = obj
-            const datetypeChange = new Date(dueDate);
-            const objToSend = { ...rest, dueDate: datetypeChange, user: currentUserId, completed: false };
-            dispatch({ type: asyncResActionTypes.ASYNC_ACTION_START });
-            // await postMethodCustomHeader('api/todo', objToSend);
-            await taskApi.addNewTask(currentUserId, objToSend).then(() => {
-                dispatch({ type: taskActionType.POST_TASK });
-                dispatch(getTaskAciton());
-                dispatch({ type: asyncResActionTypes.ASYNC_ACTION_FINISH });
-                toast.success(Strings.toaster.addTask)
-            }).catch(err => {
-                dispatch({ type: asyncResActionTypes.ASYNC_ACTION_ERROR });
-                console.log(err);
-            })
-        } catch (error) {
-            console.log("Error :: " + error);
+        const { dueDate, ...rest } = obj
+        const datetypeChange = new Date(dueDate);
+        const objToSend = { ...rest, dueDate: datetypeChange, user: currentUserId, completed: false };
+        dispatch({ type: asyncResActionTypes.ASYNC_ACTION_START });
+        await taskApi.addNewTask(currentUserId, objToSend).then((response) => {
+            dispatch({ type: taskActionType.POST_TASK });
+            dispatch(getTaskAciton());
+            dispatch({ type: asyncResActionTypes.ASYNC_ACTION_FINISH });
+            successHandler(response, {
+                notifyOnSuccess: true,
+                notifyOnFailed: true,
+            });
+        }).catch(err => {
             dispatch({ type: asyncResActionTypes.ASYNC_ACTION_ERROR });
-        }
+            return errorHandler(err)
+        })
     };
 };
 

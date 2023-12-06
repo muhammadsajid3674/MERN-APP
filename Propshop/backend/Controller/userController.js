@@ -10,11 +10,14 @@ const authUser = asyncHandler(async (req, res) => {
     const user = await User.findOne({ email });
     if (user && (await user.matchPassword(password))) {
         res.json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            isAdmin: user.isAdmin,
-            token: generatetoken(user._id)
+            success: true,
+            data: {
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                isAdmin: user.isAdmin,
+                token: generatetoken(user._id)
+            }
         })
     } else {
         res.status(401)
@@ -30,11 +33,14 @@ const getUserProfile = asyncHandler(async (req, res) => {
     const user = await User.findById({ _id });
     if (user) {
         res.json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            isAdmin: user.isAdmin,
-            token: generatetoken(user._id)
+            success: true,
+            data: {
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                isAdmin: user.isAdmin,
+                token: generatetoken(user._id)
+            }
         })
     } else {
         res.status(401)
@@ -56,11 +62,14 @@ const updateUserProfile = asyncHandler(async (req, res) => {
         };
         const updated = await user.save();
         res.json({
-            _id: updated._id,
-            name: updated.name,
-            email: updated.email,
-            isAdmin: updated.isAdmin,
-            token: generatetoken(updated._id)
+            success: true,
+            data: {
+                _id: updated._id,
+                name: updated.name,
+                email: updated.email,
+                isAdmin: updated.isAdmin,
+                token: generatetoken(updated._id)
+            }
         });
     } else {
         res.status(401)
@@ -86,11 +95,14 @@ const registerUser = asyncHandler(async (req, res) => {
     if (user) {
         res.status(200)
         res.json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            isAdmin: user.isAdmin,
-            token: generatetoken(user._id)
+            success: true,
+            data: {
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                isAdmin: user.isAdmin,
+                token: generatetoken(user._id)
+            }
         })
     } else {
         res.status(400);
@@ -103,7 +115,10 @@ const registerUser = asyncHandler(async (req, res) => {
 // @access Public/admin
 const getUsersList = asyncHandler(async (req, res) => {
     const users = await User.find({});
-    res.json(users);
+    res.json({
+        success: true,
+        data: users
+    });
 });
 
 // @desc get all users
@@ -111,7 +126,10 @@ const getUsersList = asyncHandler(async (req, res) => {
 // @access Public/admin
 const getUserById = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
-    res.json(user);
+    res.json({
+        success: true,
+        data: user
+    });
 });
 
 // @desc delete single user
@@ -121,7 +139,7 @@ const deleteUser = asyncHandler(async (req, res) => {
     const deletedUser = await User.deleteOne({ _id: req.params.id })
     res.json({
         message: 'User is deleted',
-        status: true,
+        success: true,
         data: deletedUser
     });
 });
@@ -137,11 +155,14 @@ const updateUser = asyncHandler(async (req, res) => {
         user.isAdmin = req.body.isAdmin;
         const updated = await user.save()
         res.json({
-            _id: updated._id,
-            name: updated.name,
-            email: updated.email,
-            isAdmin: updated.isAdmin,
-            token: generatetoken(updated._id)
+            success: true,
+            data: {
+                _id: updated._id,
+                name: updated.name,
+                email: updated.email,
+                isAdmin: updated.isAdmin,
+                token: generatetoken(updated._id)
+            }
         })
     } else {
         res.status(401)

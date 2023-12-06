@@ -7,6 +7,7 @@ import MessageAlert from '../components/MessageAlert'
 import Loader from '../components/Loader'
 
 const HomeScreen = () => {
+    console.log('hello :>> ');
     const dispatch = useDispatch();
     const { loading, error, products } = useSelector(state => state.productList)
 

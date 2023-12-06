@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import FormContainer from '../components/FormContainer'
 import LoadingButton from '../components/LoadingButton';
 import MessageAlert from '../components/MessageAlert';
-import { register } from '../config/Redux/Action/userAction';
+import { register } from '../config/Redux/Action/auth';
 import { withRouterAndRedux } from '../config/util/withRouterAndRedux';
 
 const RegisterScreen = ({ dispatch, state, navigate }) => {

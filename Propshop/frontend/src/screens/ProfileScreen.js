@@ -28,19 +28,15 @@ const ProfileScreen = ({ navigate, dispatch }) => {
         e.preventDefault()
     }
     useEffect(() => {
-        if (!userInfo) {
-            navigate('/login')
+        if (!user) {
+            dispatch({ type: actionType.USER_UPDATE_PROFILE_RESET })
+            dispatch(getUserDetails())
+            dispatch(myOrderList())
         } else {
-            if (!user) {
-                dispatch({ type: actionType.USER_UPDATE_PROFILE_RESET })
-                dispatch(getUserDetails())
-                dispatch(myOrderList())
-            } else {
-                setName(user.name)
-                setEmail(user.email)
-            }
+            setName(user.name)
+            setEmail(user.email)
         }
-    }, [dispatch, userInfo, user, navigate])
+    }, [dispatch, user, navigate])
     return (
         <Container>
             <Row>
