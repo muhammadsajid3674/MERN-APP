@@ -61,13 +61,14 @@ userSchema.method({
         });
         return transformed;
     },
-    token() {
-        const playload = {
-            exp: moment().add(envVars.jwtExpirationInterval, 'minutes').unix(),
+    token(user) {
+        const payload = {
+            user,
+            exp: moment().add(envVars.jwtExpirationInterval, 'hours').unix(),
             iat: moment().unix(),
             sub: this._id,
         };
-        return jwt.sign(playload, envVars.jwtSecret);
+        return jwt.sign(payload, envVars.jwtSecret);
     },
     async matchPassword(password) {
         return bcrypt.compare(password, this.password);
@@ -111,14 +112,14 @@ userSchema.statics = {
      */
     async ValidateUserAndGenerateToken(options) {
         const { email, password } = options;
-        const user = await this.findOne({ email }).exec();
+        const user = await this.findOne({ email });
         if (!user) {
             throw new ErrorHandler({ message: constants.INVALID_CREDENTIALS, status: constants.UNAUTHORIZED });
         }
         if (!await user.matchPassword(password)) {
             throw new ErrorHandler({ message: constants.INVALID_CREDENTIALS, status: constants.UNAUTHORIZED });
         }
-        return { user: user.transform(), accessToken: user.token() };
+        return { user: user.transform(), accessToken: user.token({name: user?.name, email: user?.email, id: user?._id }) };
     },
 
     /**

@@ -1,14 +1,20 @@
 import asyncHandler from 'express-async-handler';
 import Order from '../models/orderModel.js';
+import ErrorHandler from '../util/errorHandler.js';
+import constants from '../util/constants.js';
 
-// @desc Add Order Items
-// @route POST /api/orders
-// @access Private
+/**
+* Add Order Items
+*
+* @public
+* @param {Request} req
+* @param {Response} res
+* @param {next} next
+*/
 export const addOrderItems = asyncHandler(async (req, res) => {
     const { orderItems, shippingAddress, paymentMethod, itemsPrice, shippingPrice, taxPrice, totalPrice } = req.body;
     if (orderItems && orderItems.length === 0) {
-        res.status(400)
-        throw new Error('No order items')
+        throw new ErrorHandler({ message: 'No order items', status: constants.NOT_FOUND })
         return
     } else {
         const order = new Order({
@@ -22,29 +28,37 @@ export const addOrderItems = asyncHandler(async (req, res) => {
             totalPrice
         })
         const createdOrder = await order.save();
-        res.status(201).json(createdOrder)
+        res.status(constants.CREATED).json({ data: createdOrder, success: true })
     }
 })
 
-
-// @desc Get order by id
-// @route GET /api/order/:id
-// @access Private
+/**
+* Get order by id
+*
+* @public
+* @param {Request} req
+* @param {Response} res
+* @param {next} next
+*/
 export const getOrderById = asyncHandler(async (req, res) => {
     const { id } = req.params;
     if (!id) {
-        res.status(400)
-        throw new Error('No order items')
+        throw new ErrorHandler({ message: 'No order items', status: constants.NOT_FOUND })
         return
     } else {
         const orderById = await Order.findById(id).populate('user', 'name email');
-        res.status(201).json(orderById)
+        res.status(constants.CREATED).json({ data: orderById, success: true })
     }
 })
 
-// @desc update order to paid
-// @route PUT /api/order/:id/pay
-// @access Private
+/**
+* update order to paid
+*
+* @public
+* @param {Request} req
+* @param {Response} res
+* @param {next} next
+*/
 export const updateOrderToPaid = asyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id);
     if (order) {
@@ -57,20 +71,25 @@ export const updateOrderToPaid = asyncHandler(async (req, res) => {
             email_address: req.body.email_address
         }
         const updateOrder = await order.save();
-        res.json(updateOrder);
+        res.status(constants.OK).json({ data: updateOrder, success: true });
     } else {
-        throw new Error('Order not found');
+        throw new ErrorHandler({ message: 'Order not found', status: constants.NOT_FOUND })
     }
 })
 
-// @desc get order list
-// @route GET /api/order
-// @access Private
+/**
+* get order list
+*
+* @public
+* @param {Request} req
+* @param {Response} res
+* @param {next} next
+*/
 export const getOrderList = asyncHandler(async (req, res) => {
     const orderList = await Order.find({ user: req.user._id });
     if (orderList) {
-        res.json(orderList);
+        res.status(constants.OK).json({ data: orderList, success: true });
     } else {
-        throw new Error('Order not found');
+        throw new ErrorHandler({ message: 'Order not found', status: constants.NOT_FOUND })
     }
 })

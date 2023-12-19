@@ -21,10 +21,6 @@ app.use(cors());
 const DB_URL = 'mongodb+srv://admin:admin123@cluster0.s4xr5cb.mongodb.net/proshop?retryWrites=true&w=majority';
 
 
-// app.use('/api/product', productRouter);
-// app.use('/api/user', userRouter);
-// app.use('/api/order', orderRouter);
-// app.get('/api/config/paypal', (req, res) => res.send(process.env.PAYPAL_CLIENT_ID))
 
 
 

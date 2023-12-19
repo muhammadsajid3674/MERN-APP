@@ -9,25 +9,12 @@ export const notFound = (req, res, next) => {
     next(error)
 };
 
-// const errorHandler = (err, req, res, next) => {
-//     const statusCode = res.statusCode === 200 ? 500 : res.statusCode
-//     res.status(statusCode)
-//     res.json({
-//         message: err.message,
-//         stack: envVars.env === 'production' ? null : err.stack
-//     })
-// };
-
-// export { errorHandler, notFound };  
-
-
 export const error = (err, req, res, next) => {
     err.statusCode = err.statusCode || 500;
 
     let error = { ...err }
 
     error.message = err.message
-    console.log('err :>> ', err.errors);
 
     // * Wrong Mongoose Object ID Error
     if (err.name === 'CastError') {

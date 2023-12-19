@@ -3,35 +3,7 @@ import User from '../models/user.js';
 import asyncErrorHandler from '../util/asyncErrorHandler.js';
 import ErrorHandler from '../util/errorHandler.js';
 import constants from '../util/constants.js';
-
-// export const protectedRoute = asyncHandler(async (req, res, next) => {
-//     let token;
-//     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-//         try {
-//             token = req.headers.authorization.split(' ')[1];
-//             const decoded = jwt.verify(token, process.env.JWT_SECRET)
-//             req.user = await User.findById(decoded.id).select('-password')
-//             next()
-//         } catch (error) {
-//             console.log(error);
-//             res.status(401);
-//             throw new Error('Not authorized, token failed')
-//         }
-//     }
-//     if (!token) {
-//         res.status(401);
-//         throw new Error('Not authorized, no token')
-//     }
-// });
-
-// export const admin = asyncHandler(async (req, res, next) => {
-//     if (req.user && req.user.isAdmin) {
-//         next();
-//     } else {
-//         res.status(401);
-//         throw new Error('Not authorized as a admin');
-//     }
-// })
+import envVars from '../config/env-vars.js';
 
 const authMiddleware = {
 
@@ -41,13 +13,14 @@ const authMiddleware = {
         if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
             try {
                 token = req.headers.authorization.split(' ')[1];
-                const decoded = jwt.verify(token, process.env.JWT_SECRET)
-                req.user = await User.findById(decoded.id).select('-password')
+                const decoded = jwt.verify(token, envVars.jwtSecret);
+                console.log('decoded :>> ', decoded);
+                req.user = await User.findById(decoded.user.id).select('-password')
                 next()
             } catch (error) {
                 console.log(error);
                 res.status(constants.UNAUTHORIZED);
-                throw new ErrorHandler({ message: 'Not authorized, token failed', status: constants.UNAUTHORIZED })
+                throw new ErrorHandler({ message: 'Not authorized, token failed/expired', status: constants.UNAUTHORIZED })
             }
         }
         if (!token) {
@@ -55,18 +28,20 @@ const authMiddleware = {
             throw new ErrorHandler({ message: 'Not authorized, no token', status: constants.UNAUTHORIZED })
         }
     }),
+    
     // * Merchant Authorization
     authenticateAdmin: asyncErrorHandler(async (req, res, next) => {
-        const userId = req.userId;
+        const userId = req.user._id;
 
         // * Check in DB
-        //    const merchant = await User.findOne({ userId });
-
-        if (req.user.isAdmin) {
+        const user = await User.findById(userId);
+        console.log('user :>> ', user);
+        if (user?.isAdmin) {
             return next();
         }
-        next(new ErrorHandler({ message: "Only merchants are allowed", status: constants.UNAUTHORIZED }));
+        next(new ErrorHandler({ message: "Only admin are allowed", status: constants.UNAUTHORIZED }));
     }),
+
     // * API Authorization
     authorize: (req, res, next) => {
         let authKey;
