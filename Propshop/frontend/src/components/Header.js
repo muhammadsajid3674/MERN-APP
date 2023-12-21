@@ -5,22 +5,34 @@ import { logout } from '../config/Redux/Action/auth';
 import { SearchIcon } from '../core/Icon';
 import { useEffect, useState } from 'react';
 import { searchProduct } from '../config/Redux/Action/product';
+import { request } from '../config/request';
+import Search from './ui/Search';
 
 
 function Header() {
     const [searchTerm, setSearchTerm] = useState("")
+    const [searchResult, setSearchResult] = useState([])
+    const [loader, setLoader] = useState(false)
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { authenticated, currentUser } = useSelector(state => state.auth)
-    const handleLogout = () => {
-        dispatch(logout())
+
+    const handleLogout = () => dispatch(logout())
+
+    const handleSearch = (e) => {
+        setLoader(true);
+        setSearchTerm(e.target.value);
     }
     useEffect(() => {
-        const delay = 500;
-        const debounceTimer = setTimeout(async () => {
-            dispatch(searchProduct(searchTerm))
-        }, delay);
-        return () => clearTimeout(debounceTimer);
+        if(searchTerm) {
+            const delay = 500;
+            const debounceTimer = setTimeout(async () => {
+                const result = await request.search('/api/product', { name: searchTerm });
+                setSearchResult(result?.data);
+                setLoader(false);
+            }, delay);
+            return () => clearTimeout(debounceTimer);
+        }
     }, [dispatch, searchTerm]);
     return (
         <Navbar bg="dark" variant='dark' expand="lg" collapseOnSelect>
@@ -42,10 +54,15 @@ function Header() {
                                 </InputGroup.Text>
                                 <Form.Control
                                     value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    onChange={handleSearch}
                                     placeholder="Search Here..."
                                     aria-label="Search"
                                     aria-describedby="basic-addon1"
+                                />
+                                <Search
+                                    data={searchResult}
+                                    loading={loader}
+                                    visible={!!searchTerm}
                                 />
                             </InputGroup>
                         </Nav.Link>

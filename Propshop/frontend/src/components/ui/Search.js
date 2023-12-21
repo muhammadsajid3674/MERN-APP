@@ -5,18 +5,16 @@ import Loader from "../Loader";
 const Search = ({ visible, loading, data }) => {
     return (
         <div
-            className={`${visible ? "" : "hidden"} bg-cardLight shadow-md rounded-md absolute w-full top-12 z-20`}
+            className={`${visible ? "" : "invisible"} bg-white shadow position-absolute w-100`}
+            style={{ top: "2.5rem", zIndex: 10 }}
         >
-            {loading ? (
-                <div className='flex justify-center p-5'>
-                    <Loader />
-                </div>
-            ) : (
-                data &&
+            {data && data.length > 0 ?
                 data.map((res) => (
-                    <SearchCard imageUrl={res.imageUrl} name={res.name} />
-                ))
-            )}
+                    <SearchCard imageUrl={res.image} name={res.name} id={res._id} />
+                )) : (
+                    <p className="text-dark text-center mb-0">No Product Found</p>
+                )
+            }
         </div>
     );
 };

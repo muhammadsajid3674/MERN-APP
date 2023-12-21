@@ -1,14 +1,19 @@
-const SearchCard = ({ imageUrl, name }) => {
+import { useNavigate } from "react-router-dom";
+
+const SearchCard = ({ imageUrl, name, id }) => {
+    const image = require(`../../${imageUrl}`)
+
+    const navigate = useNavigate();
     return (
-        <div className='flex items-center p-5 gap-5'>
+        <div className='d-flex align-items-center p-2 gap-2' onClick={() => { navigate('/product/' + id) }}>
             <img
-                src={imageUrl}
+                src={image}
                 width={50}
                 height={50}
-                className='object-contain'
+                style={{ objectFit: 'contain' }}
                 alt={name}
             />
-            <p className="h5">{name}</p>
+            <p className="text-dark mb-0">{name.slice(0, 15)}...</p>
         </div>
     );
 };
