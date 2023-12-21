@@ -1,7 +1,8 @@
 class ApiFeatures {
-    constructor(query, queryStr) {
+    constructor(query, queryStr, req) {
         this.query = query;
         this.queryStr = queryStr;
+        this.req = req;
     }
     search() {
         const searchQuery = this.queryStr.name

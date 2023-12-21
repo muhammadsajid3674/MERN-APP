@@ -1,0 +1,4 @@
+export const PRODUCT_LIST = 'PRODUCT_LIST';
+export const SINGLE_PRODUCT = 'SINGLE_PRODUCT';
+export const PRODUCT_DELETE = 'PRODUCT_DELETE';
+export const SEARCH_PRODUCT = 'SEARCH_PRODUCT';

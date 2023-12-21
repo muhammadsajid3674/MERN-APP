@@ -12,13 +12,19 @@ const ProfileScreen = lazy(() => import('../../screens/ProfileScreen'));
 const ShippingScreen = lazy(() => import('../../screens/ShippingScreen'));
 const UserListScreen = lazy(() => import('../../screens/UserListScreen'));
 const UpdateUserScreen = lazy(() => import('../../screens/UpdateUserScreen'));
+const LoginScreen = lazy(() => import('../../screens/LoginScreen'));
+const RegisterScreen = lazy(() => import('../../screens/RegisterScreen'));
 
 export default function AppRouter() {
     let element = useRoutes([
-        // {
-        //     path: '/login',
-        //     element: <PublicRoute />
-        // },
+        {
+            path: '/login',
+            element: <LoginScreen />
+        },
+        {
+            path: '/register',
+            element: <RegisterScreen />
+        },
         {
             path: '/',
             element: <HomeScreen />

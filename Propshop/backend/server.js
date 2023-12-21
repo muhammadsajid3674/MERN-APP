@@ -12,16 +12,12 @@ import envVars from './config/env-vars.js';
 import Routes from './routes/routes.js';
 import { error, notFound } from './middleware/error.js';
 import authMiddleware from './middleware/auth.js';
+import './util/cache.js';
 
 dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cors());
-
-const DB_URL = 'mongodb+srv://admin:admin123@cluster0.s4xr5cb.mongodb.net/proshop?retryWrites=true&w=majority';
-
-
-
 
 
 app.get("/", authMiddleware.authorize, (req, res) =>
@@ -39,7 +35,7 @@ app.use(error);
 const server = http.createServer(app)
 server.listen(envVars.port)
 server.on('listening', () => {
-    connectDB(DB_URL);
+    connectDB(envVars.mongo_uri);
     logger.info(`${envVars.env.toUpperCase()} Server is Listening on PORT ${envVars.port}`.yellow);
 })
 

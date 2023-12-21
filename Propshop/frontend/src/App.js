@@ -9,25 +9,23 @@ const PropshopApp = lazy(() => import('./Propshop'));
 
 function App() {
 
-  if (!window.localStorage.getItem('access_token')) {
-    return (
-      <PublicRoute>
-        <Suspense fallback={<Loader />}>
-          <AuthRouter />
-        </Suspense>
-      </PublicRoute>
-    )
-  } else {
-    return (
-      <PrivateRoute>
-        <Suspense fallback={<Loader />}>
-          <PrivateRoute>
-            <PropshopApp />
-          </PrivateRoute>
-        </Suspense>
-      </PrivateRoute>
-    )
-  }
+  // if (!window.localStorage.getItem('access_token')) {
+  //   return (
+  //     <PublicRoute>
+  //       <Suspense fallback={<Loader />}>
+  //         <AuthRouter />
+  //       </Suspense>
+  //     </PublicRoute>
+  //   )
+  // } else {
+  return (
+    <Suspense fallback={<Loader />}>
+      {/* <PrivateRoute> */}
+      <PropshopApp />
+      {/* </PrivateRoute> */}
+    </Suspense>
+  )
+  // }
 }
 
 export default App;

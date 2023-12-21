@@ -3,17 +3,18 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 import { cartReducer } from "./Reducer/cartReducer";
 import { myOrderListReducer, orderDetailReducer, orderListReducer, orderPaymentReducer } from "./Reducer/orderReducer";
-import { deleteProductReducer, productListReducer, singleProductReducer } from "./Reducer/productReducer";
+import productReducer from "./Reducer/product";
 import { deleteUsersReducer, updateUsersReducer, userDetailReducer, userloginReducer, userRegisterReducer, usersListReducer, userUpdateProfileReducer } from "./Reducer/userReducer";
 import authReducer from './Reducer/auth';
 import { asyncReducer } from "../AsyncHandler";
+import protectedRoutes from "../middleware/protectedRoutes";
 
 const configureStore = () => {
     const reducer = combineReducers({
         auth: authReducer,
         asyncHandler: asyncReducer,
-        productList: productListReducer,
-        singleProduct: singleProductReducer,
+        products: productReducer,
+        // singleProduct: singleProductReducer,
         cart: cartReducer,
         orderList: orderListReducer,
         orderDetail: orderDetailReducer,
@@ -26,7 +27,7 @@ const configureStore = () => {
         usersList: usersListReducer,
         deleteUser: deleteUsersReducer,
         updateUser: updateUsersReducer,
-        deleteProduct: deleteProductReducer
+        // deleteProduct: deleteProductReducer
     });
 
     const cartItemFromStorage = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
@@ -43,7 +44,7 @@ const configureStore = () => {
         userLogin: { userInfo: userInfoFromStorage }
     };
 
-    const middlewares = [thunk];
+    const middlewares = [thunk, protectedRoutes];
 
     const composeEnhancer = composeWithDevTools(applyMiddleware(...middlewares))
 

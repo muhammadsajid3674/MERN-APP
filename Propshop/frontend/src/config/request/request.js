@@ -1,5 +1,5 @@
 import axios from 'axios';
-import BASE_URI from '../BASE_URI';
+import { BASE_URI, AUTHKEY } from '../BASE_URI';
 import errorHandler from './errorHandler';
 import successHandler from './successHandler';
 
@@ -18,7 +18,7 @@ const request = {
 
     post: async (endPoint, jsonData, options = {}) => {
         try {
-            const response = await axios.post(endPoint, jsonData);
+            const response = await axios.post(endPoint, jsonData, { headers: { Authorization: `Bearer ${AUTHKEY}` } });
             successHandler(response, {
                 notifyOnSuccess: true,
             });
@@ -76,10 +76,10 @@ const request = {
             }
             query = query.slice(0, -1);
             // headersInstance.cancelToken = source.token;
-            const response = await axios.get(endPoint + '/search' + query);
+            const response = await axios.get(endPoint + query);
 
             successHandler(response, {
-                notifyOnSuccess: true,
+                notifyOnSuccess: false,
             });
             return response.data;
         } catch (error) {

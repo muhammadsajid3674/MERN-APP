@@ -35,6 +35,7 @@
     "jsonwebtoken": "^9.0.0",
     "moment": "^2.29.4",
     "mongoose": "^7.0.1",
+    "redis": "^4.6.12",
     "validator": "^13.11.0",
     "winston": "^3.11.0"
   },

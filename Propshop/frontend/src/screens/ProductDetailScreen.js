@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import { fetchSingleProduct } from '../config/Redux/Action/productAction'
+import { fetchSingleProduct } from '../config/Redux/Action/product'
 import Loader from '../components/Loader'
 import MessageAlert from '../components/MessageAlert'
 import ProductDetail from '../components/ProductDetail'
@@ -11,7 +11,8 @@ const ProductDetailScreen = () => {
     const params = useParams()
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { loading, error, product } = useSelector(state => state.singleProduct)
+    const product = useSelector(state => state.products)
+    const { loading, error } = useSelector(state => state.asyncHandler)
 
     useEffect(() => {
         dispatch(fetchSingleProduct(params.id))

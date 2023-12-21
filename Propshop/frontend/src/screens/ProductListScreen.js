@@ -2,16 +2,16 @@ import React, { useEffect } from 'react'
 import { Col, Stack, Table } from 'react-bootstrap';
 import Loader from '../components/Loader';
 import MessageAlert from '../components/MessageAlert';
-import { deleteProduct, fetchProductList } from '../config/Redux/Action/productAction';
+// import { deleteProduct, fetchProductList } from '../config/Redux/Action/productAction';
 import { withRouterAndRedux } from '../config/util/withRouterAndRedux'
 
 const ProductListScreen = ({ dispatch, state }) => {
     const { productList: { loading, error, products }, deleteProduct: { success: successDelete } } = state;
     const deleteProductHandler = (id) => {
-        dispatch(deleteProduct(id))
+        // dispatch(deleteProduct(id))
     }
     useEffect(() => {
-        dispatch(fetchProductList())
+        // dispatch(fetchProductList())
     }, [dispatch, successDelete])
 
     return (

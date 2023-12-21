@@ -14,7 +14,7 @@ import ApiFeatures from '../util/apiFeatures.js';
  */
 export const getProducts = asyncErrorHandler(async (req, res, next) => {
     const resPerPage = 4;
-    const apiFeatures = new ApiFeatures(Product.find(), req.query).search().filter().pagination(resPerPage)
+    const apiFeatures = new ApiFeatures(Product.find(), req.query, req).search().filter().pagination(resPerPage)
     let products = await apiFeatures.query;
     res.status(constants.OK).json({ data: products, success: true });
 })

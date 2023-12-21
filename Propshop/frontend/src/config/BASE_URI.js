@@ -1,3 +1,2 @@
-const BASE_URI = 'http://localhost:8080/api';
-
-export default BASE_URI;
+export const BASE_URI = 'http://localhost:8000';
+export const AUTHKEY = 'hello';

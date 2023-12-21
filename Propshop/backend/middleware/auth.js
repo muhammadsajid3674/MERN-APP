@@ -28,7 +28,7 @@ const authMiddleware = {
             throw new ErrorHandler({ message: 'Not authorized, no token', status: constants.UNAUTHORIZED })
         }
     }),
-    
+
     // * Merchant Authorization
     authenticateAdmin: asyncErrorHandler(async (req, res, next) => {
         const userId = req.user._id;
@@ -44,6 +44,7 @@ const authMiddleware = {
 
     // * API Authorization
     authorize: (req, res, next) => {
+        console.log('object :>> ', req.headers.authorization);
         let authKey;
         if (
             req.headers.authorization &&

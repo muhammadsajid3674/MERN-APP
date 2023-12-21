@@ -7,7 +7,7 @@ import MessageAlert from '../components/MessageAlert';
 import Loader from '../components/Loader';
 import { useSelector } from 'react-redux';
 import { PayPalButton } from 'react-paypal-button-v2'
-import BASE_URI from '../config/BASE_URI';
+import { BASE_URI } from '../config/BASE_URI';
 import axios from 'axios';
 import { actionType } from '../config/Redux/Constant/orderConstant';
 

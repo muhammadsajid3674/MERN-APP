@@ -1,5 +1,5 @@
 import axios from "axios";
-import BASE_URI from "../../BASE_URI";
+import {BASE_URI} from "../../BASE_URI";
 import { actionType } from "../Constant/orderConstant";
 
 export const createOrder = (objToSend) => {
