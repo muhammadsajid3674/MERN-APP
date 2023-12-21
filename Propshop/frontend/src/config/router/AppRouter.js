@@ -38,7 +38,7 @@ export default function AppRouter() {
             element: <ProductDetailScreen />
         },
         {
-            path: '/cart/:id',
+            path: '/cart/:id?',
             element: <CartScreen />
         },
         {

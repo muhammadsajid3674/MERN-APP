@@ -8,10 +8,10 @@ import { createOrder } from '../config/Redux/Action/orderAction';
 import { withRouterAndRedux } from '../config/util/withRouterAndRedux';
 
 const OrderScreen = ({ state, dispatch, navigate }) => {
-    const { cartItems, shippingAddress, paymentMethod } = state.cart;
+    const { items, shippingAddress, paymentMethod } = state.cart;
     const { order, error, success, loading } = state.orderList;
     //Calculate Price
-    state.cart.itemsPrice = cartItems.reduce((acc, item) => acc + item.price * item.qty, 0).toFixed(2);
+    state.cart.itemsPrice = items.reduce((acc, item) => acc + item.price * item.qty, 0).toFixed(2);
     state.cart.shippingPrice = state.cart.itemsPrice > 1000 ? 0 : 100;
     state.cart.taxPrice = Number(0.15 * state.cart.itemsPrice).toFixed(2);
     state.cart.totalPrice = Number(state.cart.itemsPrice) + Number(state.cart.shippingPrice) + Number(state.cart.taxPrice);
@@ -25,7 +25,7 @@ const OrderScreen = ({ state, dispatch, navigate }) => {
 
     const placeOrderHandler = () => {
         dispatch(createOrder({
-            orderItems: cartItems,
+            orderItems: items,
             shippingAddress: shippingAddress,
             paymentMethod: paymentMethod,
             itemsPrice: state.cart.itemsPrice,
@@ -51,12 +51,12 @@ const OrderScreen = ({ state, dispatch, navigate }) => {
                     <hr />
                     <div>
                         <h2>Order Items</h2>
-                        {!cartItems || cartItems.length === 0 ? (
+                        {!items || items.length === 0 ? (
                             <MessageAlert>
                                 Your cart is empty <Link to='/'>Go Back</Link>
                             </MessageAlert>
                         ) : (
-                            cartItems.length > 0 && cartItems.map((item, index) => {
+                            items.length > 0 && items.map((item, index) => {
                                 let cartItemImage;
                                 if (item.image) {
                                     cartItemImage = require(`../${item.image}`)
@@ -111,7 +111,7 @@ const OrderScreen = ({ state, dispatch, navigate }) => {
                                         type='submit'
                                         label='Place Order'
                                         isLoading={loading}
-                                        disabled={!cartItems.length > 0 && true}
+                                        disabled={!items.length > 0 && true}
                                         onClick={placeOrderHandler}
                                     />
                                 </Col>

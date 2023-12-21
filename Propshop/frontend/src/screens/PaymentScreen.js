@@ -3,7 +3,7 @@ import { Col, Form, FormGroup } from 'react-bootstrap'
 import CheckOutSteps from '../components/CheckOutSteps';
 import FormContainer from '../components/FormContainer'
 import LoadingButton from '../components/LoadingButton';
-import { selectPaymentMethod } from '../config/Redux/Action/cartAction';
+import { selectPaymentMethod } from '../config/Redux/Action/cart';
 import { withRouterAndRedux } from '../config/util/withRouterAndRedux';
 
 const PaymentScreen = ({ dispatch, navigate, state }) => {

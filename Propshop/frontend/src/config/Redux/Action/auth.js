@@ -19,11 +19,12 @@ export const login = (credentials) => {
     }
 }
 
-export const register = (formData) => {
+export const register = (name, email, password) => {
     return async (dispatch) => {
-        dispatch(asyncStart())
-        const result = await request.post('/user/register', formData)
-        if (!result.success) {
+        dispatch(asyncStart(actionType.REGISTER))
+        const result = await request.post('/api/auth/register', { name, email, password })
+        console.log('result :>> ', result);
+        if (result.success) {
             localStorage.setItem('access_token', result.data.token)
             dispatch({ type: actionType.LOGIN, payload: result.data })
             dispatch(asyncFinish('register'))

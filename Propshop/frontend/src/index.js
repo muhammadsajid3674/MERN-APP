@@ -8,23 +8,26 @@ import configureStore from './config/Redux/store';
 import { BrowserRouter } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import Loader from './components/Loader';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const App = lazy(() => import('./App'))
 
-const store = configureStore();
+const { persistor, store } = configureStore();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <BrowserRouter>
     <Provider store={store}>
-      <Suspense fallback={<Loader />}>
-        <App />
-        <Toaster
-          position="bottom-right"
-          reverseOrder={false}
-        />
-      </Suspense>
+      <PersistGate loading={null} persistor={persistor}>
+        <Suspense fallback={<Loader />}>
+          <App />
+          <Toaster
+            position="bottom-right"
+            reverseOrder={false}
+          />
+        </Suspense>
+      </PersistGate>
     </Provider>
   </BrowserRouter>
 );

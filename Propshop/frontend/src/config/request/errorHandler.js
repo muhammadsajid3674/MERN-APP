@@ -3,7 +3,7 @@ import codeMessage from './codeMessage';
 
 const errorHandler = (error) => {
     const { response } = error;
-
+    console.log('response :>> ', response);
     if (response && response.status) {
         const message = response.data && response.data.message;
         const errorText = message || codeMessage[response.status];
@@ -12,7 +12,7 @@ const errorHandler = (error) => {
             message: `Request error ${status}`,
             description: errorText,
         });
-        toast.error(`Request error ${status}`)
+        toast.error(message)
         // if (response.data && response.data.jwtExpired) {
         //   navigate('/logout');
         // }

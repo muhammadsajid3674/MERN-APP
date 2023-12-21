@@ -9,11 +9,11 @@ export const getUserDetails = () => {
             dispatch({
                 type: actionType.USER_DETAIL_REQUEST
             })
-            const { userLogin: { userInfo } } = getState();
+            // const { userLogin: { userInfo } } = getState();
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${userInfo.token}`
+                    // Authorization: `Bearer ${userInfo.token}`
                 }
             }
             const { data } = await axios.get(`${BASE_URI}/api/user/profile`, config)
@@ -36,11 +36,11 @@ export const updateUserProfile = (objToSend) => {
             dispatch({
                 type: actionType.USER_UPDATE_PROFILE_REQUEST
             })
-            const { userLogin: { userInfo } } = getState();
+            // const { userLogin: { userInfo } } = getState();
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${userInfo.token}`
+                    // Authorization: `Bearer ${userInfo.token}`
                 }
             }
             const { data } = await axios.put(`${BASE_URI}/api/user/profile`, objToSend, config)
@@ -52,7 +52,7 @@ export const updateUserProfile = (objToSend) => {
                 type: actionType.USER_LOGIN_SUCCESS,
                 payload: data
             })
-            localStorage.setItem('userInfo', JSON.stringify(data))
+            // localStorage.setItem('userInfo', JSON.stringify(data))
         } catch (error) {
             dispatch({
                 type: actionType.USER_UPDATE_PROFILE_FAIL,
@@ -68,10 +68,10 @@ export const getUsersList = () => {
             dispatch({
                 type: actionType.ALL_USER_REQUEST
             })
-            const { userLogin: { userInfo } } = getState();
+            // const { userLogin: { userInfo } } = getState();
             const config = {
                 headers: {
-                    Authorization: `Bearer ${userInfo.token}`
+                    // Authorization: `Bearer ${userInfo.token}`
                 }
             }
             const { data } = await axios.get(`${BASE_URI}/api/user`, config)
@@ -94,10 +94,10 @@ export const deleteUser = (id) => {
             dispatch({
                 type: actionType.DELETE_USER_REQUEST
             })
-            const { userLogin: { userInfo } } = getState();
+            // const { userLogin: { userInfo } } = getState();
             const config = {
                 headers: {
-                    Authorization: `Bearer ${userInfo.token}`
+                    // Authorization: `Bearer ${userInfo.token}`
                 }
             }
             await axios.delete(`${BASE_URI}/api/user/${id}`, config)
@@ -117,10 +117,10 @@ export const UpdateUser = (id, objToSend) => {
             dispatch({
                 type: actionType.UPDATE_USER_REQUEST
             })
-            const { userLogin: { userInfo } } = getState();
+            // const { userLogin: { userInfo } } = getState();
             const config = {
                 headers: {
-                    Authorization: `Bearer ${userInfo.token}`
+                    // Authorization: `Bearer ${userInfo.token}`
                 }
             }
             const {data } = await axios.put(`${BASE_URI}/api/user/${id}`, objToSend, config)

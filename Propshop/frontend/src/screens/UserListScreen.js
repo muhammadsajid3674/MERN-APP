@@ -9,7 +9,7 @@ import { withRouterAndRedux } from '../config/util/withRouterAndRedux'
 const UserListScreen = ({ dispatch, state }) => {
     const {
         usersList: { users, error, loading },
-        userLogin: { userInfo },
+        userLogin: { currentUser },
         deleteUser: { success: successDelete },
         updateUser: { success: successUpdate }
     } = state;
@@ -19,12 +19,12 @@ const UserListScreen = ({ dispatch, state }) => {
     };
 
     useEffect(() => {
-        if (userInfo && userInfo.isAdmin) {
+        if (currentUser && currentUser.isAdmin) {
             dispatch(getUsersList())
         } else {
             navigate('/login')
         }
-    }, [dispatch, navigate, userInfo, successDelete, successUpdate])
+    }, [dispatch, navigate, currentUser, successDelete, successUpdate])
 
     return (
         <>

@@ -18,7 +18,7 @@ const ProfileScreen = ({ navigate, dispatch }) => {
     const { loading, error, user } = useSelector(state => state.userDetail);
     const { loading: loadingOrder, orders, error: errorOrder } = useSelector(state => state.myOrderList);
     const { success } = useSelector(state => state.userUpdateProfile);
-    const { userInfo } = useSelector(state => state.userLogin);
+    const { currentUser } = useSelector(state => state.auth);
     const handleSubmit = (e) => {
         if (password !== confirmPassword) {
             setMessage('Passwords do not match')

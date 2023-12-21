@@ -9,7 +9,7 @@ export const userloginReducer = (state = {}, action) => {
         case actionType.USER_LOGIN_SUCCESS:
             return {
                 loading: false,
-                userInfo: action.payload
+                // userInfo: action.payload
             };
         case actionType.USER_LOGIN_FAIL:
             return {
@@ -18,7 +18,7 @@ export const userloginReducer = (state = {}, action) => {
             };
         case actionType.USER_LOGOUT:
             return {
-                userInfo: null
+                // userInfo: null
             }
 
         default:
@@ -34,7 +34,7 @@ export const userRegisterReducer = (state = {}, action) => {
         case actionType.USER_REGISTER_SUCCESS:
             return {
                 loading: false,
-                userInfo: action.payload
+                // userInfo: action.payload
             };
         case actionType.USER_REGISTER_FAIL:
             return {
@@ -79,7 +79,7 @@ export const userUpdateProfileReducer = (state = {}, action) => {
             return {
                 loading: false,
                 success: true,
-                userInfo: action.payload
+                // userInfo: action.payload
             };
         case actionType.USER_UPDATE_PROFILE_FAIL:
             return {

@@ -3,7 +3,7 @@ import { Form, FormGroup } from 'react-bootstrap'
 import CheckOutSteps from '../components/CheckOutSteps';
 import FormContainer from '../components/FormContainer'
 import LoadingButton from '../components/LoadingButton';
-import { addShippingAddress } from '../config/Redux/Action/cartAction';
+import { addShippingAddress } from '../config/Redux/Action/cart';
 import { withRouterAndRedux } from '../config/util/withRouterAndRedux';
 
 const ShippingScreen = ({ state: { cart: { shippingAddress } }, dispatch, navigate }) => {

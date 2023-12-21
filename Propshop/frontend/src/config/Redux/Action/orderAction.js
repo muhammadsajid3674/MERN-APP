@@ -8,11 +8,11 @@ export const createOrder = (objToSend) => {
             dispatch({
                 type: actionType.ORDER_CREATE_REQUEST
             })
-            const { userLogin: { userInfo } } = getState();
+            // const { userLogin: { userInfo } } = getState();
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${userInfo.token}`
+                    // Authorization: `Bearer ${userInfo.token}`
                 }
             }
             const { data } = await axios.post(`${BASE_URI}/api/order`, objToSend, config)
@@ -36,10 +36,10 @@ export const orderDetail = (id) => {
             dispatch({
                 type: actionType.ORDER_DETAIL_REQUEST
             })
-            const { userLogin: { userInfo } } = getState();
+            // const { userLogin: { userInfo } } = getState();
             const config = {
                 headers: {
-                    Authorization: `Bearer ${userInfo.token}`
+                    // Authorization: `Bearer ${userInfo.token}`
                 }
             }
             const { data } = await axios.get(`${BASE_URI}/api/order/${id}`, config)
@@ -63,11 +63,11 @@ export const orderPayment = (id, paymentResult) => {
             dispatch({
                 type: actionType.ORDER_PAY_REQUEST
             })
-            const { userLogin: { userInfo } } = getState();
+            // const { userLogin: { userInfo } } = getState();
             const config = {
                 headers: {
                     "Conten-Type": "application/json",
-                    Authorization: `Bearer ${userInfo.token}`
+                    // Authorization: `Bearer ${userInfo.token}`
                 }
             }
             const { data } = await axios.put(`${BASE_URI}/api/order/${id}/pay`, paymentResult, config)
@@ -90,11 +90,11 @@ export const myOrderList = () => {
             dispatch({
                 type: actionType.ORDER_GET_REQUEST
             })
-            const { userLogin: { userInfo } } = getState();
+            // const { userLogin: { userInfo } } = getState();
             const config = {
                 headers: {
                     "Conten-Type": "application/json",
-                    Authorization: `Bearer ${userInfo.token}`
+                    // Authorization: `Bearer ${userInfo.token}`
                 }
             }
             const { data } = await axios.get(`${BASE_URI}/api/order`, config)
